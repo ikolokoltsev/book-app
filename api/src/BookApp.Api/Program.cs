@@ -1,5 +1,6 @@
 using BookApp.Api.Extensions;
 using BookApp.Api.Features.Auth;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +21,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseHttpsRedirection();
 }
 app.UseCors(CorsExtensions.PolicyName);
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapOpenApi();
+app.MapScalarApiReference();
 app.MapHealthChecks("/health");
 app.MapControllers();
 
