@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 builder.Services.AddPersistence(builder.Configuration);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -17,7 +18,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.MapHealthChecks("/health");
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
