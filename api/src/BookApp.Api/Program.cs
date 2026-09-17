@@ -2,6 +2,7 @@ using BookApp.Api.Common;
 using BookApp.Api.Extensions;
 using BookApp.Api.Features.Auth;
 using BookApp.Api.Features.Books;
+using BookApp.Api.Features.Quotes;
 
 using Microsoft.AspNetCore.HttpOverrides;
 
@@ -16,6 +17,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<QuoteService>();
 builder.Services.AddCorsPolicy(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddPersistence(builder.Configuration);
