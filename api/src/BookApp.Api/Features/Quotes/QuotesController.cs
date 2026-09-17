@@ -1,5 +1,4 @@
 using BookApp.Api.Features.Quotes;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +10,9 @@ namespace BookApp.Api.Features.Quotes;
 public class QuotesController(QuoteService quoteService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<QuoteResponse>>> GetAllQuotes(CancellationToken ct) =>
-        Ok(await quoteService.GetAllQuotesAsync(ct));
+    public async Task<ActionResult<IReadOnlyList<QuoteResponse>>> GetAllQuotes(
+        CancellationToken ct
+    ) => Ok(await quoteService.GetAllQuotesAsync(ct));
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<QuoteResponse>> GetQuoteById(Guid id, CancellationToken ct)
@@ -22,7 +22,10 @@ public class QuotesController(QuoteService quoteService) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<QuoteResponse>> CreateQuote(QuoteRequest request, CancellationToken ct)
+    public async Task<ActionResult<QuoteResponse>> CreateQuote(
+        QuoteRequest request,
+        CancellationToken ct
+    )
     {
         var created = await quoteService.CreateQuoteAsync(request, ct);
         return CreatedAtAction(nameof(GetQuoteById), new { id = created.Id }, created);
@@ -30,7 +33,10 @@ public class QuotesController(QuoteService quoteService) : ControllerBase
 
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<QuoteResponse>> UpdateQuote(
-        Guid id, QuoteRequest request, CancellationToken ct)
+        Guid id,
+        QuoteRequest request,
+        CancellationToken ct
+    )
     {
         var updated = await quoteService.UpdateQuoteAsync(id, request, ct);
         return updated is null ? NotFound() : Ok(updated);

@@ -6,13 +6,19 @@ public static class CorsExtensions
 
     public static IServiceCollection AddCorsPolicy(
         this IServiceCollection services,
-         IConfiguration configuration
+        IConfiguration configuration
     )
     {
-        var allowedOrigin = configuration["Cors:AllowedOrigin"]
+        var allowedOrigin =
+            configuration["Cors:AllowedOrigin"]
             ?? throw new InvalidOperationException("Cors is not configured.");
 
-        services.AddCors(options => options.AddPolicy(PolicyName, policy => policy.WithOrigins(allowedOrigin).AllowAnyHeader().AllowAnyMethod()));
+        services.AddCors(options =>
+            options.AddPolicy(
+                PolicyName,
+                policy => policy.WithOrigins(allowedOrigin).AllowAnyHeader().AllowAnyMethod()
+            )
+        );
 
         return services;
     }

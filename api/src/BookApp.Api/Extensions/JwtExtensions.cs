@@ -1,5 +1,4 @@
 using System.Text;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -9,9 +8,11 @@ public static class JwtExtensions
 {
     public static IServiceCollection AddJwtAuth(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration
+    )
     {
-        var key = configuration["Jwt:Key"]
+        var key =
+            configuration["Jwt:Key"]
             ?? throw new InvalidOperationException("Token is not configured.");
 
         services

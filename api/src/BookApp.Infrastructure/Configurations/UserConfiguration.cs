@@ -1,5 +1,4 @@
 using BookApp.Domain;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

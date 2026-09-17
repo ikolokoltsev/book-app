@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -17,39 +16,74 @@ namespace BookApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Author = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Title = table.Column<string>(
+                        type: "character varying(200)",
+                        maxLength: 200,
+                        nullable: false
+                    ),
+                    Author = table.Column<string>(
+                        type: "character varying(200)",
+                        maxLength: 200,
+                        nullable: false
+                    ),
                     PublishedOn = table.Column<DateOnly>(type: "date", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAt = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Username = table.Column<string>(
+                        type: "character varying(50)",
+                        maxLength: 50,
+                        nullable: false
+                    ),
+                    PasswordHash = table.Column<string>(
+                        type: "character varying(200)",
+                        maxLength: 200,
+                        nullable: false
+                    ),
+                    CreatedAt = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Quotes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Text = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    Author = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    Text = table.Column<string>(
+                        type: "character varying(1000)",
+                        maxLength: 1000,
+                        nullable: false
+                    ),
+                    Author = table.Column<string>(
+                        type: "character varying(200)",
+                        maxLength: 200,
+                        nullable: true
+                    ),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAt = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {
@@ -59,32 +93,33 @@ namespace BookApp.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quotes_UserId",
                 table: "Quotes",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
                 table: "Users",
                 column: "Username",
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Books");
+            migrationBuilder.DropTable(name: "Books");
 
-            migrationBuilder.DropTable(
-                name: "Quotes");
+            migrationBuilder.DropTable(name: "Quotes");
 
-            migrationBuilder.DropTable(
-                name: "Users");
+            migrationBuilder.DropTable(name: "Users");
         }
     }
 }

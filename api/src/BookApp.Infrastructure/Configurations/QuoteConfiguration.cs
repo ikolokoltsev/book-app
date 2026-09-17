@@ -1,5 +1,4 @@
 using BookApp.Domain;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,6 +15,10 @@ public class QuoteConfiguration : IEntityTypeConfiguration<Quote>
 
         builder.HasIndex(q => q.UserId);
 
-        builder.HasOne<User>().WithMany().HasForeignKey(q => q.UserId).OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasOne<User>()
+            .WithMany()
+            .HasForeignKey(q => q.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,9 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 using BookApp.Domain;
-
 using Microsoft.IdentityModel.Tokens;
 
 namespace BookApp.Api.Features.Auth;
@@ -12,7 +10,8 @@ public class TokenService(IConfiguration configuration)
 {
     public AuthResponse CreateToken(User user)
     {
-        var key = configuration["Jwt:Key"]
+        var key =
+            configuration["Jwt:Key"]
             ?? throw new InvalidOperationException("Jwt:Key is not configured.");
         var issuer = configuration["Jwt:Issuer"]!;
         var audience = configuration["Jwt:Audience"]!;
@@ -27,10 +26,16 @@ public class TokenService(IConfiguration configuration)
 
         var credentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
-            SecurityAlgorithms.HmacSha256);
+            SecurityAlgorithms.HmacSha256
+        );
 
-        var token = new JwtSecurityToken(issuer, audience, claims, expires: expires,
-            signingCredentials: credentials);
+        var token = new JwtSecurityToken(
+            issuer,
+            audience,
+            claims,
+            expires: expires,
+            signingCredentials: credentials
+        );
 
         return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), expires);
     }

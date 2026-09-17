@@ -1,6 +1,5 @@
 using BookApp.Domain;
 using BookApp.Infrastructure;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace BookApp.Api.Features.Books;
@@ -8,17 +7,15 @@ namespace BookApp.Api.Features.Books;
 public class BookService(AppDbContext db)
 {
     public async Task<IReadOnlyList<BookResponse>> GetAllBooksAsync(CancellationToken ct) =>
-
-        await db.Books
-            .AsNoTracking()
+        await db
+            .Books.AsNoTracking()
             .OrderByDescending(b => b.CreatedAt)
             .Select(b => new BookResponse(b.Id, b.Title, b.Author, b.PublishedOn, b.CreatedAt))
             .ToListAsync(ct);
 
-
     public async Task<BookResponse?> GetBookByIdAsync(Guid id, CancellationToken ct) =>
-        await db.Books
-            .AsNoTracking()
+        await db
+            .Books.AsNoTracking()
             .Where(b => b.Id == id)
             .Select(b => new BookResponse(b.Id, b.Title, b.Author, b.PublishedOn, b.CreatedAt))
             .FirstOrDefaultAsync(ct);
@@ -38,10 +35,15 @@ public class BookService(AppDbContext db)
         return new BookResponse(book.Id, book.Title, book.Author, book.PublishedOn, book.CreatedAt);
     }
 
-    public async Task<BookResponse?> UpdateBookAsync(Guid id, BookRequest request, CancellationToken ct)
+    public async Task<BookResponse?> UpdateBookAsync(
+        Guid id,
+        BookRequest request,
+        CancellationToken ct
+    )
     {
         var book = await db.Books.FirstOrDefaultAsync(b => b.Id == id, ct);
-        if (book is null) return null;
+        if (book is null)
+            return null;
 
         book.Title = request.Title;
         book.Author = request.Author;
