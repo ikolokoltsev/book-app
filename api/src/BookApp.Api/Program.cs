@@ -1,8 +1,10 @@
+using BookApp.Api.Common;
 using BookApp.Api.Extensions;
 using BookApp.Api.Features.Auth;
-using Scalar.AspNetCore;
-using BookApp.Api.Common;
+
 using Microsoft.AspNetCore.HttpOverrides;
+
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

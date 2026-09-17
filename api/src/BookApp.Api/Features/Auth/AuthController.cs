@@ -1,5 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
+
 using BookApp.Api.Features.Auth;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
