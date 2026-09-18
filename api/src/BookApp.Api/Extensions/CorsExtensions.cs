@@ -9,16 +9,13 @@ public static class CorsExtensions
         IConfiguration configuration
     )
     {
-        var allowedOrigin =
-            configuration["Cors:AllowedOrigin"]
-            ?? throw new InvalidOperationException("Cors is not configured.");
+        var allowedOrigins = (configuration["Cors:AllowedOrigin"]
+            ?? throw new InvalidOperationException("Cors is not configured."))
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
         services.AddCors(options =>
-            options.AddPolicy(
-                PolicyName,
-                policy => policy.WithOrigins(allowedOrigin).AllowAnyHeader().AllowAnyMethod()
-            )
-        );
+            options.AddPolicy(PolicyName,
+                policy => policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
 
         return services;
     }

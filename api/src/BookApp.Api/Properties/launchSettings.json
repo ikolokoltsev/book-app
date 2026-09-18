@@ -18,6 +18,13 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "lan": {
+      "commandName": "Project",
+      "applicationUrl": "http://0.0.0.0:5169",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

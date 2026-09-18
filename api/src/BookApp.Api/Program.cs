@@ -4,8 +4,10 @@ using BookApp.Api.Features.Auth;
 using BookApp.Api.Features.Books;
 using BookApp.Api.Features.Quotes;
 using BookApp.Infrastructure;
+
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

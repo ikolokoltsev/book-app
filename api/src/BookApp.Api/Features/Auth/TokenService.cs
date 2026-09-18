@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 using BookApp.Domain;
+
 using Microsoft.IdentityModel.Tokens;
 
 namespace BookApp.Api.Features.Auth;
