@@ -1,0 +1,73 @@
+<h1 class="h4">My quotes</h1>
+
+@if (error()) {
+<div class="alert alert-danger" role="alert">{{ error() }}</div>
+}
+
+<div class="d-flex justify-content-end">
+  <button class="btn btn-primary mb-3" (click)="add()">
+    <i class="fa-solid fa-plus me-1"></i> Add quote
+  </button>
+</div>
+
+<dialog #dialog class="border-0 rounded-3 p-0" aria-labelledby="quoteDialogTitle" (close)="cancel()">
+  <form class="p-4" [formGroup]="form" (ngSubmit)="submit()">
+    @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+    }
+
+    <h2 class="h5 mb-3" id="quoteDialogTitle">{{ editingId() ? 'Edit quote' : 'Add quote' }}</h2>
+
+    <div class="mb-3">
+      <label class="form-label" for="text">Quote</label>
+      <textarea id="text" class="form-control" rows="4" formControlName="text"></textarea>
+      @if (form.controls.text.touched && form.controls.text.hasError('maxlength')) {
+      <div class="form-text text-danger">At most 1000 characters.</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="author">Author <span class="text-muted">(optional)</span></label>
+      <input id="author" class="form-control" formControlName="author" />
+      @if (form.controls.author.touched && form.controls.author.hasError('maxlength')) {
+      <div class="form-text text-danger">At most 200 characters.</div>
+      }
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-outline-secondary" type="button" (click)="cancel()">Cancel</button>
+      <button class="btn btn-primary" [disabled]="form.invalid || saving()">
+        {{ editingId() ? 'Save' : 'Add' }}
+      </button>
+    </div>
+  </form>
+</dialog>
+
+@if (loading()) {
+<p class="text-muted">Loading…</p>
+} @else if (items().length === 0) {
+<p class="text-muted">No quotes yet.</p>
+} @else {
+<div class="row g-3">
+  @for (quote of items(); track quote.id) {
+  <div class="col-12 col-md-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <blockquote class="mb-2">{{ quote.text }}</blockquote>
+        <footer class="text-muted small">
+          {{ quote.author ?? 'Unknown' }} · {{ quote.createdAt | date: 'mediumDate' }}
+        </footer>
+      </div>
+      <div class="card-footer bg-transparent d-flex justify-content-end gap-2">
+        <button class="btn btn-sm btn-outline-secondary" (click)="edit(quote)">
+          <i class="fa-solid fa-pen me-1"></i> Edit
+        </button>
+        <button class="btn btn-sm btn-outline-danger" (click)="remove(quote)">
+          <i class="fa-solid fa-trash me-1"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+}

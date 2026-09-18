@@ -1,0 +1,7 @@
+dialog {
+  min-width: min(90vw, 28rem);
+
+  &::backdrop {
+    background: rgb(0 0 0 / 0.5);
+  }
+}

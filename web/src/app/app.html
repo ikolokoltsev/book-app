@@ -1,1 +1,22 @@
-<router-outlet />
+@if (auth.isLoggedIn()) {
+<nav class="navbar navbar-expand bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/books">BookApp</a>
+
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/books" routerLinkActive="active">Books</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/quotes" routerLinkActive="active">Quotes</a>
+      </li>
+    </ul>
+
+    <button class="btn btn-sm btn-outline-secondary" (click)="auth.logout()">Sign out</button>
+  </div>
+</nav>
+}
+
+<main class="container py-4">
+  <router-outlet />
+</main>

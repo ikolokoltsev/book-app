@@ -1,24 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { environment } from '../environments/environment';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Auth } from './core/auth/auth';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  private readonly http = inject(HttpClient);
-
-  protected readonly apiStatus = signal('checking...');
-
-  constructor() {
-    this.http.get(`${environment.apiUrl}/health`, { responseType: 'text' }).subscribe({
-      next: (value) => this.apiStatus.set(value),
-      error: (err) => this.apiStatus.set(`error ${err.status}`),
-    });
-  }
+  protected readonly auth = inject(Auth);
 }
