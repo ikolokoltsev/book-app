@@ -18,6 +18,11 @@
         </li>
       </ul>
 
+      <button class="btn btn-sm" (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark() ? 'Switch to light more' : 'Switch to dark mode'">
+        <i class="fa-solid" [class.fa-sun]="theme.isDark()" [class.fa-moon]="!theme.isDark()"></i>
+      </button>
+
       <button class="btn btn-sm btn-outline-secondary" (click)="auth.logout()">
         <i class="fa-solid fa-right-from-bracket me-1"></i> Sign out
       </button>
